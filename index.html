@@ -3,39 +3,52 @@
   <head>
     <meta charset="utf-8">
     <title>Streaming API Demo</title>
-		<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.indigo-pink.min.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./app/css/xignite-card.css" type="text/css">
   </head>
   <body>
-   
-     <!-- mount point -->
-    <xignite-card/>
-
+    <div style="text-align:center; margin: 0 auto; width: 80%;">
+			<div style="font-variant:small-caps; color:#424242;"><h2> Streaming API && Flippin' Cards !</h2></div>
+      <!-- mount point -->
+      <div id="EURUSD"></div>
+      <div id="USDGBP"></div>
+      <div id="EURJPY"></div>
+      <div id="CHFDKK"></div>
+    </div>
+    
     <!-- <inner-tag/> is specified on external file -->
     <script src="./app/js/xignite-card.tag" type="riot/tag"></script>
-
-    <!-- dependencies -->
+  
+    <!-- include dependencies -->
     <script src="./vendor/streamdataio.min.js"></script>
     <script src="./app/js/streamdata-service.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fast-json-patch/0.5.4/json-patch-duplex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
 
     <!-- include riot.js and the compiler -->
     <script src="https://cdn.jsdelivr.net/g/riot@2.0.14(riot.min.js+compiler.min.js)"></script>
 
+    <!-- mount normally -->
     <script>
-      var streamdataAppToken = « [YOUR_STREAMDATAIO_TOKEN]";
-      var xigniteToken = « [449DE173F58E40459878DC93CB74E96C]";
+      var streamdataAppToken = "[NTQxYTRmODMtYjBhMi00M2ZjLWFlZjMtOGJiODkwMGQyYjg4]";
+      var xigniteToken = "[449DE173F58E40459878DC93CB74E96C]";
 
       var bus = riot.observable();
       var streamdataService = new StreamdataService(streamdataAppToken, xigniteToken, bus);
-
+      
       window.onload = function() {
         streamdataService.fetchJson("EURUSD");
+        streamdataService.fetchJson("USDGBP");
+        streamdataService.fetchJson("EURJPY");
+        streamdataService.fetchJson("CHFDKK");
       };
 
-      <!-- mount normally -->
-      riot.mount('*', 'xignite-card', { currency: "EURUSD", bus: bus });
+      riot.mount('div#EURUSD', 'xignite-card', { currency: "EURUSD", bus: bus });
+      riot.mount('div#USDGBP', 'xignite-card', { currency: "USDGBP", bus: bus });
+      riot.mount('div#EURJPY', 'xignite-card', { currency: "EURJPY", bus: bus });
+      riot.mount('div#CHFDKK', 'xignite-card', { currency: "CHFDKK", bus: bus });
     </script>
   </body>
 </html>
